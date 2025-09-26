@@ -37,3 +37,11 @@ brew services stop mysql
 ```
 npm install @prisma/client prisma --save-dev
 ```
+
+### Generate prisma
+
+```
+npx prisma generate
+```
+
+##
