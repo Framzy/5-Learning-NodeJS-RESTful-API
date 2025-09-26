@@ -31,3 +31,9 @@ brew services stop mysql
 ```
  mysql.server stop
 ```
+
+## Install Prisma
+
+```
+npm install @prisma/client prisma --save-dev
+```
