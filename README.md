@@ -38,10 +38,27 @@ brew services stop mysql
 npm install @prisma/client prisma --save-dev
 ```
 
-### Generate prisma
+### Generate Prisma
 
 ```
 npx prisma generate
 ```
 
-##
+## Prepare Unit Test
+
+```
+Install
+    "@babel/preset-env": "^7.28.3",
+    "@types/jest": "^30.0.0",
+    "babel-jest": "^30.1.2",
+    "jest": "^30.1.3",
+```
+
+```
+Package json
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  }
+```
