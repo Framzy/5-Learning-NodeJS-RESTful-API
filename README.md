@@ -62,3 +62,11 @@ Package json
     }
   }
 ```
+
+```
+Babel config
+{
+  "presets": ["@babel/preset-env"]
+}
+
+```
