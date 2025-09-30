@@ -2,6 +2,7 @@ import { validate } from "../validation/validation.js";
 import {
   registerUserValidation,
   loginUserValidation,
+  getUserValidation,
 } from "../validation/user-validation.js";
 import { prismaClient } from "../application/database.js";
 import { ResponseError } from "../error/response-error.js";
@@ -75,4 +76,24 @@ const login = async (request) => {
   });
 };
 
-export default { register, login };
+// get user
+const getUser = async (username) => {
+  username = validate(getUserValidation, username);
+  return await prismaClient.user.findUnique({
+    where: {
+      username: username,
+    },
+    select: {
+      username: true,
+      name: true,
+    },
+  });
+
+  if (!user) {
+    throw new ResponseError(404, "User not found");
+  }
+
+  return user;
+};
+
+export default { register, login, getUser };
