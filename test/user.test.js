@@ -229,3 +229,38 @@ describe("PATCH /api/users/current", function () {
     expect(result.body.errors).toBeDefined();
   });
 });
+
+describe("DELETE /api/users/current", function () {
+  beforeEach(async () => {
+    await createTestUser();
+  });
+
+  afterEach(async () => {
+    await removeTestUser();
+  });
+
+  it("should can logout", async () => {
+    const result = await supertest(web)
+      .delete("/api/users/logout")
+      .set("Authorization", "test"); //header
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(200);
+    expect(result.body.data).toBe("Ok");
+
+    const user = await getTestUser();
+    expect(user.token).toBeNull();
+  });
+
+  it("should reject if token is invalid", async () => {
+    const result = await supertest(web)
+      .delete("/api/users/logout")
+      .set("Authorization", "wrong"); //header
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
+});

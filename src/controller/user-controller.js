@@ -49,4 +49,15 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-export default { register, login, getUser, updateUser };
+const logout = async (req, res, next) => {
+  try {
+    await userService.logout(req.user.username);
+    res.status(200).json({
+      data: "Ok",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { register, login, getUser, updateUser, logout };
