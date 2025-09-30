@@ -96,3 +96,110 @@ describe("GET /api/contacts/:contactId", function () {
     expect(result.body.errors).toBeDefined();
   });
 });
+
+describe("PUT /api/contacts/:contactId", function () {
+  beforeEach(async () => {
+    await createTestUser();
+    await createTestContact();
+  });
+
+  afterEach(async () => {
+    await removeAllTestContacts();
+    await removeTestUser();
+  });
+
+  it("should can update existing contact", async () => {
+    const testContact = await getTestContact();
+
+    const result = await supertest(web)
+      .put("/api/contacts/" + testContact.id)
+      .set("Authorization", "test") //header
+      .send({
+        first_name: "farden",
+        last_name: "ramzy",
+        email: "ramzy@gmail.com",
+        phone: "0895123123",
+      });
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(200);
+    expect(result.body.data.first_name).toBe("farden");
+    expect(result.body.data.last_name).toBe("ramzy");
+    expect(result.body.data.email).toBe("ramzy@gmail.com");
+    expect(result.body.data.phone).toBe("0895123123");
+  });
+
+  it("should reject if request is invalid", async () => {
+    const testContact = await getTestContact();
+
+    const result = await supertest(web)
+      .put("/api/contacts/" + testContact.id)
+      .set("Authorization", "test") //header
+      .send({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+      });
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body.errors).toBeDefined();
+  });
+
+  it("should return 404 if contact not found", async () => {
+    const testContact = await getTestContact();
+
+    const result = await supertest(web)
+      .put("/api/contacts/" + testContact.id + 1)
+      .set("Authorization", "test") //header
+      .send({
+        first_name: "farden",
+        last_name: "ramzy",
+        email: "ramzy@gmail.com",
+        phone: "0895123123",
+      });
+
+    expect(result.statusCode).toBe(404);
+    expect(result.body.errors).toBeDefined();
+  });
+});
+
+describe("DELETE /api/contacts/:contactId", function () {
+  beforeEach(async () => {
+    await createTestUser();
+    await createTestContact();
+  });
+
+  afterEach(async () => {
+    await removeAllTestContacts();
+    await removeTestUser();
+  });
+
+  it("should can delete contact", async () => {
+    let testContact = await getTestContact();
+
+    const result = await supertest(web)
+      .delete("/api/contacts/" + testContact.id)
+      .set("Authorization", "test"); //header
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(200);
+    expect(result.body.data).toBe("OK");
+
+    testContact = await getTestContact();
+    expect(testContact).toBeNull();
+  });
+
+  it("should return 404 if contact not found", async () => {
+    const testContact = await getTestContact();
+
+    const result = await supertest(web)
+      .delete("/api/contacts/" + testContact.id + 1)
+      .set("Authorization", "test"); //header
+
+    expect(result.statusCode).toBe(404);
+    expect(result.body.errors).toBeDefined();
+  });
+});

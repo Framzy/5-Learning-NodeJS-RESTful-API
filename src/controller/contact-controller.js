@@ -20,7 +20,7 @@ const getContact = async (req, res, next) => {
     const contactId = req.params.contactId;
 
     const result = await contactService.getContact(user, contactId);
-    return res.status(200).json({
+    res.status(200).json({
       data: result,
     });
   } catch (error) {
@@ -28,4 +28,34 @@ const getContact = async (req, res, next) => {
   }
 };
 
-export default { create, getContact };
+const updateContact = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const contactId = req.params.contactId;
+    const request = req.body;
+    request.id = contactId;
+
+    const result = await contactService.updateContact(user, request);
+    res.status(200).json({
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const remove = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const contactId = req.params.contactId;
+
+    await contactService.remove(user, contactId);
+    res.status(200).json({
+      data: "OK",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { create, getContact, updateContact, remove };
