@@ -80,8 +80,46 @@ describe("POST /api/users/login", function () {
       password: "rahasia",
     });
 
+    logger.info(result.body);
+
     expect(result.statusCode).toBe(200);
-    expect(result.body.data.token).toBeUndefined();
+    expect(result.body.data.token).toBeDefined();
     expect(result.body.data.token).not.toBe("test");
+  });
+
+  it("should reject login if request is invalid", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      username: "",
+      password: "",
+    });
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body.errors).toBeDefined();
+  });
+
+  it("should reject login if password is wrong", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      username: "test",
+      password: "wrong",
+    });
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
+
+  it("should reject login if username is wrong", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      username: "wrong",
+      password: "wrong",
+    });
+
+    logger.info(result.body);
+
+    expect(result.statusCode).toBe(401);
+    expect(result.body.errors).toBeDefined();
   });
 });
