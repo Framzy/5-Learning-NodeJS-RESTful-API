@@ -30,4 +30,21 @@ const getAddress = async (req, res, next) => {
   }
 };
 
-export default { create, getAddress };
+const updateAddress = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const contactId = req.params.contactId;
+    const addressId = req.params.addressId;
+    const request = req.body;
+    request.id = addressId;
+
+    const result = await addressService.updateAddress(user, contactId, request);
+    res.status(200).json({
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { create, getAddress, updateAddress };
