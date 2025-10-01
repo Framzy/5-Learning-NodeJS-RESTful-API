@@ -1,8 +1,9 @@
-POST http://localhost:3000/api/users
+### Register user baru
+
+GET http://localhost:3000/api/users/current
 Content-Type: application/json
 Accept: application/json
-{
-  "username": "framzy",
-  "password": "rahasia",
-  "name": "Farden Ramzy"
-}
+Authorization: abe98eb5-495b-4a19-8115-2c47c786b7ee
+
+
+

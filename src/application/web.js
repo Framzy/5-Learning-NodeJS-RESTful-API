@@ -10,3 +10,7 @@ web.use(express.json());
 web.use(publicRouter);
 web.use(userRouter);
 web.use(errorMiddleware);
+console.log(
+  "Routes loaded:",
+  publicRouter.stack.map((r) => r.route?.path)
+);

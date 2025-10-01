@@ -1,6 +1,8 @@
 import { prismaClient } from "../application/database.js";
 
 export const authMiddleware = async (req, res, next) => {
+  console.log("AuthMiddleware HIT on", req.method, req.url); // 👀 debug
+
   const token = req.get("Authorization");
   if (!token) {
     return res
