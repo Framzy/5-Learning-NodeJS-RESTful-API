@@ -1,9 +1,11 @@
-### Register user baru
 
-GET http://localhost:3000/api/users/current
+### 1. Register user baru
+POST http://localhost:3000/api/users
 Content-Type: application/json
 Accept: application/json
-Authorization: abe98eb5-495b-4a19-8115-2c47c786b7ee
 
-
-
+{
+  "username": "test",
+  "password": "rahasia",
+  "name": "test"
+}
