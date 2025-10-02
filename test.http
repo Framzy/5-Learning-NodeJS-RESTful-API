@@ -9,3 +9,15 @@ Accept: application/json
   "password": "rahasia",
   "name": "test"
 }
+
+###
+
+### 2. Login user (dapatkan token)
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "test",
+  "password": "rahasia"
+}
