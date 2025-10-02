@@ -31,6 +31,7 @@ Authorization: 0bff5b37-710f-4cbf-8724-fc08aa93ca45
 Accept: application/json
 
 ###
+
 ### 4. Update user
 
 PATCH http://localhost:3000/api/users/current
@@ -42,5 +43,14 @@ Accept: application/json
   "name": "test",
   "password": "rahasiaBaru"
 }
+
+###
+
+### 5. Logout user
+
+DELETE http://localhost:3000/api/users/logout
+Content-Type: application/json
+Authorization: 0bff5b37-710f-4cbf-8724-fc08aa93ca45
+Accept: application/json
 
 ###
