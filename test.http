@@ -21,3 +21,14 @@ Accept: application/json
   "username": "test",
   "password": "rahasia"
 }
+
+###
+
+
+### 3. Get current user (pakai token dari login)
+GET http://localhost:3000/api/users/current
+Authorization: a8293c18-624b-47fb-aab6-a1c435c230c5
+Accept: application/json
+
+###
+
